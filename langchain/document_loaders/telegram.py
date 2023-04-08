@@ -18,12 +18,9 @@ def concatenate_rows(row: dict) -> str:
 class TelegramChatLoader(BaseLoader):
     """Loader that loads Telegram chat json directory dump."""
 
-    def __init__(self, path: str, include: Optional[List[str]] = None):
+    def __init__(self, path: str):
         """Initialize with path."""
         self.file_path = path
-        if include is None:
-            include = ["date", "text", "from"]
-        self.include = include
 
     def load(self) -> List[Document]:
         """Load documents."""
@@ -48,7 +45,7 @@ class TelegramChatLoader(BaseLoader):
             & (df_normalized_messages.text.apply(lambda x: type(x) == str))
         ]
 
-        df_filtered = df_filtered[self.include]
+        df_filtered = df_filtered[["text"]]
 
         text = df_filtered.apply(concatenate_rows, axis=1).str.cat(sep="")
 
