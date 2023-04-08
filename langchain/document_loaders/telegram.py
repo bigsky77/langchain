@@ -49,6 +49,6 @@ class TelegramChatLoader(BaseLoader):
 
         text = df_filtered.apply(concatenate_rows, axis=1).str.cat(sep="")
 
-        metadata = {"source": str(p)}
+        metadata = {"HELLO": str(p)}
 
         return [Document(page_content=text, metadata=metadata)]
